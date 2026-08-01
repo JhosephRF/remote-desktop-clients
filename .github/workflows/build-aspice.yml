@@ -30,7 +30,7 @@ jobs:
           echo "sdk.dir=$ANDROID_HOME" > local.properties
           echo "ndk.dir=$ANDROID_HOME/ndk/25.2.9519653" >> local.properties
 
-      - name: 5. Preparar scripts e dependências
+      - name: 5. Preparar scripts, dependências e aplicar correção
         run: |
           chmod +x gradlew
           chmod +x download-prebuilt-dependencies.sh
@@ -38,6 +38,9 @@ jobs:
 
           ./download-prebuilt-dependencies.sh
           ./bVNC/prepare_project.sh --skip-build libs nopath
+
+          # Desativa a linha com método ausente no FreeRDP
+          sed -i 's/performanceFlags.setGlyphCache/\/\/ performanceFlags.setGlyphCache/g' remoteClientLib/src/main/java/com/undatech/opaque/RdpCommunicator.java
 
       - name: 6. Mostrar versões
         run: |
