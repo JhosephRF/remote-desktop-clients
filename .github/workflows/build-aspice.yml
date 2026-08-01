@@ -44,27 +44,14 @@ jobs:
           java -version
           ./gradlew --version
 
-      - name: 7. Verificar método GlyphCache
-        run: |
-          echo "===== Procurando setGlyphCache ====="
-          grep -R -n "setGlyphCache" remoteClientLib/jni/libs/deps/FreeRDP || true
-
-          echo ""
-          echo "===== Procurando glyphCache ====="
-          grep -R -n "glyphCache" remoteClientLib/jni/libs/deps/FreeRDP || true
-
-          echo ""
-          echo "===== Procurando PerformanceFlags ====="
-          grep -R -n "class PerformanceFlags" remoteClientLib/jni/libs/deps/FreeRDP || true
-
-      - name: 8. Compilar APKs
+      - name: 7. Compilar APKs
         run: |
           ./gradlew clean assembleDebug \
             --stacktrace \
             --info \
             --warning-mode all
 
-      - name: 9. Publicar APKs
+      - name: 8. Publicar APKs
         if: always()
         uses: actions/upload-artifact@v4
         with:
